@@ -18,6 +18,9 @@
 
 class String
   def caesar(shift)
+    ascii = self.chars.map { |el| el.ord - "a".ord }
+    ascii_shifted = ascii.map { |el| el + shift }
+    ascii_shifted.map { |el| (el%26 + "a".ord).chr }.join
   end
 end
 
@@ -36,6 +39,14 @@ end
 
 class Hash
   def difference(other_hash)
+    new_hash = {}
+    self.keys.each do |key|
+      new_hash[key] = self[key] unless other_hash.has_key?(key)
+    end
+    other_hash.keys.each do |key|
+      new_hash[key] = other_hash[key] unless self.has_key?(key)
+    end
+    p new_hash
   end
 end
 
@@ -98,6 +109,50 @@ end
 
 class Fixnum
   def stringify(base)
+    result = []
+    divisor = 1
+    if base == 10
+      while divisor < self
+        if self <= 10
+          result << (self / divisor)
+          break
+        else
+          result.unshift((self / divisor) % 10)
+          divisor *= 10
+        end
+      end
+      result.join
+    elsif base == 2
+      while divisor < self
+        result.unshift((self / divisor) % 2)
+        divisor *= 2
+      end
+      result.join
+    elsif base == 16
+      while divisor < self
+        result.unshift((self / divisor) % 16)
+        divisor *= 16
+      end
+      converted = []
+      result.each do |el|
+        if el == 10
+          converted << "a"
+        elsif el == 11
+          converted << "b"
+        elsif el == 12
+          converted << "c"
+        elsif el == 13
+          converted << "d"
+        elsif el == 14
+          converted << "e"
+        elsif el == 15
+          converted << "f"
+        else
+          converted << el
+        end
+      end
+      converted.join
+    end
   end
 end
 

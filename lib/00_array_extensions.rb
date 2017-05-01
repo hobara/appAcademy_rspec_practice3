@@ -5,6 +5,9 @@
 
 class Array
   def sum
+    sum_total = 0
+    self.each { |el| sum_total += el }
+    sum_total
   end
 end
 
@@ -16,9 +19,11 @@ end
 
 class Array
   def square!
+    self.map! { |el| el * el }
   end
 
   def square
+    self.map { |el| el * el }
   end
 end
 
@@ -36,6 +41,9 @@ end
 
 class Array
   def my_uniq
+    uniq_array = []
+    self.each { |el| uniq_array << el unless uniq_array.include?(el) }
+    uniq_array
   end
 end
 
@@ -57,6 +65,17 @@ end
 
 class Array
   def two_sum
+    match_idx = []
+    idx1 = 0
+    while idx1 < self.length - 1
+      (idx1+1...self.length).each do |idx2|
+        if self[idx1] + self[idx2] == 0
+          match_idx << [idx1, idx2]
+        end
+      end
+      idx1 += 1
+    end
+    match_idx
   end
 end
 
@@ -69,6 +88,14 @@ end
 
 class Array
   def median
+    if self.empty?
+      nil
+    elsif self.length.odd?
+      self.sort[self.length/2]
+    else
+      median_numbers = self.sort[(self.length/2)-1] + self.sort[self.length/2]
+      median_numbers/2.0
+    end
   end
 end
 
@@ -121,6 +148,21 @@ end
 
 class Array
   def my_transpose
+    result = []
+    transposed = []
+    idx1 = 0
+    while idx1 < self.length
+      idx2 = 0
+      while idx2 < self[0].length
+        transposed << self[idx2][idx1]
+        idx2 += 1
+      end
+      result << transposed
+      transposed = []
+      idx1 += 1
+      idx2 = 0
+    end
+    result
   end
 end
 
