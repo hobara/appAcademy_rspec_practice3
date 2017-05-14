@@ -148,21 +148,20 @@ end
 
 class Array
   def my_transpose
-    result = []
+    transposing = []
     transposed = []
     idx1 = 0
-    while idx1 < self.length
+    while idx1 < self[0].length
       idx2 = 0
-      while idx2 < self[0].length
-        transposed << self[idx2][idx1]
+      while idx2 < self.length
+        transposing << self[idx2][idx1]
         idx2 += 1
       end
-      result << transposed
-      transposed = []
+      transposed << transposing
+      transposing = []
       idx1 += 1
-      idx2 = 0
     end
-    result
+    transposed
   end
 end
 

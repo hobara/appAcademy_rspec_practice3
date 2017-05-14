@@ -18,9 +18,11 @@
 
 class String
   def caesar(shift)
-    ascii = self.chars.map { |el| el.ord - "a".ord }
+    ascii = self.chars.map { |el| el.ord - "A".ord }
     ascii_shifted = ascii.map { |el| el + shift }
-    ascii_shifted.map { |el| (el%26 + "a".ord).chr }.join
+    ascii_shifted.map do |el|
+      el < 26 + shift ? (el % 26 + "A".ord).chr : ((el - 6) % 26 + "a".ord).chr
+    end.join
   end
 end
 
@@ -46,7 +48,7 @@ class Hash
     other_hash.keys.each do |key|
       new_hash[key] = other_hash[key] unless self.has_key?(key)
     end
-    p new_hash
+    new_hash
   end
 end
 
@@ -135,20 +137,14 @@ class Fixnum
       end
       converted = []
       result.each do |el|
-        if el == 10
-          converted << "a"
-        elsif el == 11
-          converted << "b"
-        elsif el == 12
-          converted << "c"
-        elsif el == 13
-          converted << "d"
-        elsif el == 14
-          converted << "e"
-        elsif el == 15
-          converted << "f"
-        else
-          converted << el
+        case el
+        when 10 then converted << "a"
+        when 11 then converted << "b"
+        when 12 then converted << "c"
+        when 13 then converted << "d"
+        when 14 then converted << "e"
+        when 15 then converted << "f"
+        else converted << el
         end
       end
       converted.join
